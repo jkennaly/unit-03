@@ -324,7 +324,8 @@ const creditNumberLengthWrong = num => {
 }
 	
 const creditNumberLengthWrongMessage = 'Credit card number must be 13-16 digits'
-	//zip code 5 not digit number
+
+//zip code 5 not digit number
 const $zipCodeField = $('#zip')
 const zipCodeLengthWrong = num => {
 	const creditSelected = $paymentOptionSelect.prop('selectedIndex') === 1 
@@ -333,7 +334,7 @@ const zipCodeLengthWrong = num => {
 }
 const zipCodeLengthWrongMessage = 'Zip code must be 5 digits'
 
-	//cvv 3 not digit number
+//cvv 3 not digit number
 const $cvvField = $('#cvv')
 const cvvLengthWrong = num => {
 	const creditSelected = $paymentOptionSelect.prop('selectedIndex') === 1 
@@ -354,9 +355,9 @@ const errorMessages = [
 	zipCodeLengthWrongMessage,
 	cvvLengthWrongMessage
 ]
-//parentSelector returns a jQuery selector that picks
+//labelSelector returns a jQuery selector that picks
 //the parent to append the error message element to
-const parentSelectors = [
+const labelSelectors = [
 	'label[for="name"]',
 	'label[for="name"]',
 	'label[for="mail"]',
@@ -383,7 +384,7 @@ $form.on('submit', e => {
 	for(let i=0;i<errors.length;i++) {
 		//if the error exists 
 		if(errors[i]) {
-			attachErrorMessage($(parentSelectors[i]), errorMessages[i])
+			attachErrorMessage($(labelSelectors[i]), errorMessages[i])
 		}
 	}
 
