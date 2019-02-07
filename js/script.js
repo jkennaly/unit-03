@@ -328,7 +328,7 @@ Extra Credit: Conditional Error Message && Real-time Error Message
 **************/
 //if name is field is not blank but contains any punctuation other than ' or _ it will trigger an error
 //The name field is checked for illegal characters in real time
-const nameCharsInvalid = name => /[^\w']/.test(name);
+const nameCharsInvalid = name => /[^\w' ]/.test(name);
 const nameCharsInvalidMessage = "Letters, numbers, _ and ' only";
 
 //invalid email
