@@ -62,22 +62,47 @@ const optionsByPunniness = $select => {
 	};
 };
 
+//organizes select into punny and notPunny option indexes
+const optionIndexesByPunniness = $select => {
+	//get the options
+	const $options = $select.children("option");
+	let punny = [];
+	let notPunny = [];
+	//sort the indexes in punny and notPunny and return on an object
+	//skip 0 because it is a placeholder
+	for (let i = 1; i < $options.length; i++) {
+		if (punsSelected($options[i].innerHTML)) {
+			punny.push(i);
+		} else {
+			notPunny.push(i);
+		}
+	}
+	return {
+		punny: punny,
+		notPunny: notPunny
+	};
+};
+
 //show the punny and hide the unPunny; set color selector back to placeholder
-const showPuns = (reset = true) => $select => {
+const showPuns = () => $select => {
 	const options = optionsByPunniness($select);
+	const indexes = optionIndexesByPunniness($select);
 	options.$punny.show();
 	options.$notPunny.hide();
-	//reset the color selecter if requested (also by default)
-	if (reset) $select.prop("selectedIndex", 0);
+	//set the color index to an appropriate color
+	const newIndex = indexes.punny[0];
+	$select.prop("selectedIndex", newIndex);
 };
 
 //hide the punny and show the unPunny; set color selector back to placeholder
-const hidePuns = (reset = true) => $select => {
+const hidePuns = () => $select => {
 	const options = optionsByPunniness($select);
+	const indexes = optionIndexesByPunniness($select);
 	options.$punny.hide();
 	options.$notPunny.show();
-	//reset the color selecter if requested (also by default)
-	if (reset) $select.prop("selectedIndex", 0);
+	//set the color index to an appropriate color
+	const newIndex = indexes.notPunny[0];
+	$select.prop("selectedIndex", newIndex);
 };
 
 /*************
@@ -89,6 +114,7 @@ Extra Credit: T-Shirt section
 const considerShowColorSelector = () => {
 	if ($("#design").prop("selectedIndex")) {
 		$("#color").show();
+
 		$('label[for="color"]').show();
 	}
 	//hide it if its not
@@ -102,11 +128,10 @@ const considerShowColorSelector = () => {
 considerShowColorSelector();
 
 //on load, the #design selection is punny
-const punnyInit = punsSelected(getSelectedOption($("#design")));
+const punnyInit = punsSelected(getSelectedOption($("#design")).innerHTML);
 
 //select the show/hide function based on whether puns selected
-//the false parameter indicates not to reset the index on init load
-const punFunction = punnyInit ? showPuns(false) : hidePuns(false);
+const punFunction = punnyInit ? showPuns() : hidePuns();
 //call the function on the color select el
 punFunction($("#color"));
 
