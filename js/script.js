@@ -347,7 +347,7 @@ const noActivityMessage = "At least one activity must be selected";
 const $creditNumberField = $("#cc-num");
 const creditNumberLengthWrong = num => {
 	const creditSelected = $paymentOptionSelect.prop("selectedIndex") === 1;
-	const test = creditSelected && !/\d{13,16}/.test(num);
+	const test = creditSelected && !/^\d{13,16}$/.test(num);
 	return test;
 };
 
